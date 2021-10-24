@@ -1,0 +1,21 @@
+= sb-cli
+
+Sample Spring Boot CLI application.
+
+Shows how a link:https://spring.io/projects/spring-boot[Spring Boot] application may be configured and packaged to create
+native executables with GraalVM Native Image, as well as creating binary distributions (packaged as `.zip` and `.tar.gz`),
+finally publishing said binaries as assets on a Git release via link:https://jreleaser.org[JReleaser].
+
+== Building
+
+`$ ./mvnw -Pnative package`
+
+== Packaging
+
+`$ ./mvnw -Pdist package`
+
+== Releasing
+
+Posting a release from a local environment only when binaries for the current platform are available
+
+`$ ./mvnw -Prelease jreleaser:release -Djreleaser.select.current.platform`
