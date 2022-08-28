@@ -4,18 +4,21 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.example</groupId>
     <artifactId>sb-cli</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.0-SNAPSHOT</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.7</version>
+        <version>2.7.3</version>
     </parent>
 
     <properties>
+        <assembly-plugin.version>3.4.2</assembly-plugin.version>
+        <jreleaser-plugin.version>1.2.0</jreleaser-plugin.version>
+        <os-plugin.version>1.7.0</os-plugin.version>
         <java.version>11</java.version>
         <repackage.classifier/>
-        <spring-native.version>0.10.4</spring-native.version>
+        <spring-native.version>0.12.1</spring-native.version>
         <exec.mainClass>com.example.Main</exec.mainClass>
         <executable-suffix/>
         <artifactsDir>target/distributions</artifactsDir>
@@ -58,7 +61,7 @@
             <extension>
                 <groupId>kr.motd.maven</groupId>
                 <artifactId>os-maven-plugin</artifactId>
-                <version>1.7.0</version>
+                <version>${os-plugin.version}</version>
             </extension>
         </extensions>
 
@@ -98,7 +101,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.2.0</version>
+                <version>${assembly-plugin.version}</version>
                 <configuration>
                     <attach>false</attach>
                     <appendAssemblyId>false</appendAssemblyId>
@@ -120,32 +123,32 @@
         </plugins>
     </build>
     <repositories>
-        <repository>
-            <id>spring-releases</id>
-            <name>Spring Releases</name>
-            <url>https://repo.spring.io/release</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
+      <repository>
+        <id>spring-releases</id>
+        <name>Spring Releases</name>
+        <url>https://repo.spring.io/release</url>
+        <snapshots>
+          <enabled>false</enabled>
+        </snapshots>
+      </repository>
     </repositories>
     <pluginRepositories>
-        <pluginRepository>
-            <id>spring-releases</id>
-            <name>Spring Releases</name>
-            <url>https://repo.spring.io/release</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </pluginRepository>
+      <pluginRepository>
+        <id>spring-releases</id>
+        <name>Spring Releases</name>
+        <url>https://repo.spring.io/release</url>
+        <snapshots>
+          <enabled>false</enabled>
+        </snapshots>
+      </pluginRepository>
     </pluginRepositories>
-
+    
     <profiles>
         <profile>
             <id>native</id>
             <properties>
                 <repackage.classifier>exec</repackage.classifier>
-                <native-buildtools.version>0.9.11</native-buildtools.version>
+                <native-buildtools.version>0.9.13</native-buildtools.version>
             </properties>
             <dependencies>
                 <dependency>
@@ -224,7 +227,7 @@
                     <plugin>
                         <groupId>org.jreleaser</groupId>
                         <artifactId>jreleaser-maven-plugin</artifactId>
-                        <version>1.0.0</version>
+                        <version>${jreleaser-plugin.version}</version>
                         <configuration>
                             <jreleaser>
                                 <release>
@@ -240,7 +243,7 @@
                                                 <format>- {{contributorName}}</format>
                                             </contributors>
                                             <hide>
-                                                <categories>Merge</categories>
+                                                <categories>merge</categories>
                                                 <contributors>GitHub,dependabot</contributors>
                                             </hide>
                                         </changelog>
