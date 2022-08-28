@@ -8,11 +8,11 @@ finally publishing said binaries as assets on a Git release via link:https://jre
 
 == Building
 
-`$ ./mvnw -Pnative package`
+`$ ./mvnw -Pnative package -DskipTests`
 
 == Packaging
 
-`$ ./mvnw -Pdist package`
+`$ ./mvnw -Pdist package -DskipTests`
 
 == Releasing
 

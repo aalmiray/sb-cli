@@ -5,7 +5,12 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-    
+
+env:
+  GRAAL_VERSION: '22.2.0'
+  JAVA_VERSION: '11'
+  JAVA_DISTRO: 'zulu'
+
 jobs:
   build:
     if: startsWith(github.event.head_commit.message, '🏁 Releasing version') != true && startsWith(github.event.head_commit.message, '⬆️  Next version') != true
@@ -18,15 +23,15 @@ jobs:
       - name: 'Set up Java'
         uses: actions/setup-java@v2
         with:
-          java-version: 11
-          distribution: 'zulu'
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: ${{ env.JAVA_DISTRO }}
 
       - name: 'Cache Maven packages'
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-maven-
 
       - name: 'Build'
-        run: ./mvnw -B --file pom.xml verify
+        run: ./mvnw -B -ntp --file pom.xml verify
